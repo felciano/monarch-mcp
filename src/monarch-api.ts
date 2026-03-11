@@ -119,7 +119,7 @@ interface Portfolio {
 }
 
 export class MonarchMoneyAPI {
-  private static baseURL = 'https://api.monarchmoney.com';
+  private static baseURL = 'https://api.monarch.com';
   private graphQLClient: GraphQLClient;
   private token: string;
 
@@ -281,10 +281,10 @@ export class MonarchMoneyAPI {
     const { limit = 100, accountId, startDate, endDate, offset = 0 } = options;
 
     const query = `
-      query GetTransactionsList($offset: Int, $limit: Int, $filters: TransactionFilterInput, $orderBy: TransactionOrdering) {
+      query GetTransactionsList($offset: Int, $limit: Int, $filters: TransactionFilterInput) {
         allTransactions(filters: $filters) {
           totalCount
-          results(offset: $offset, limit: $limit, orderBy: $orderBy) {
+          results(offset: $offset, limit: $limit) {
             id
             amount
             pending
@@ -316,10 +316,9 @@ export class MonarchMoneyAPI {
       offset,
       limit,
       filters: {},
-      orderBy: 'date',
     };
 
-    if (accountId) variables.filters.accountId = accountId;
+    if (accountId) variables.filters.accounts = [accountId];
     if (startDate) variables.filters.startDate = startDate;
     if (endDate) variables.filters.endDate = endDate;
 
