@@ -159,7 +159,7 @@ export class MonarchMoneyAPI {
         password,
         totp: mfaCode,
         supports_mfa: true,
-        trusted_device: false,
+        trusted_device: true,
       });
 
       if (response.data.token) {
